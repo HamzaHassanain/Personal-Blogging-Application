@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <%- include("./includes/head.ejs") %>
+    <title>Not Found</title>
+  </head>
+
+  <body>
+    <%- include("./includes/navbar.ejs") %> <%-
+    include("./includes/sidebar.ejs") %>
+    <div id="wrapper">
+      <div id="page-wrapper">
+        <div id="page-inner">
+          <div class="row">
+            <div class="col-md-12">
+              <h2 style="color: red">
+                <% if (err) { %> <%- err.error %> <%- err.message %> <% } %>
+              </h2>
+            </div>
+          </div>
+          <!-- /. ROW  -->
+          <hr />
+
+          <!-- /. ROW  -->
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12"></div>
+        <!-- /. PAGE INNER  -->
+      </div>
+      <!-- /. PAGE WRAPPER  -->
+    </div>
+    <div class="footer"></div>
+
+    <%- include("./includes/footer.ejs") %>
+  </body>
+</html>

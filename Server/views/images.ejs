@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <%- include("./includes/head.ejs") %>
+    <title>IMAGES</title>
+  </head>
+
+  <body>
+    <%- include("./includes/navbar.ejs") %> <%-
+    include("./includes/sidebar.ejs") %>
+    <div id="wrapper">
+      <div id="page-wrapper">
+        <div id="page-inner">
+          <div class="row">
+            <div class="col-md-12">
+              <h2>IMAGES</h2>
+              <h2 style="color: red">
+                <% if (err) { %> <%- err.error %> <%- err.message %> <% } %>
+              </h2>
+            </div>
+          </div>
+          <!-- /. ROW  -->
+          <hr />
+          <div class="row">
+        
+            <div class="col-lg-6 col-md-8 col-sm-12" id="ImageUpload">
+              <form
+                action="/admin/images/upload"
+                method="POST"
+                enctype="multipart/form-data"
+              >
+                <input
+                  type="file"
+                  name="image"
+                  id="file-selector"
+                  onchange="PreviewImage();"
+                />
+
+                <img  src="" alt="" class="fix" id="preview" />
+                <button type="submit" class="btn btn-success btn-md full-width">
+                  save
+                </button>
+              </form>
+
+
+
+              <script type="text/javascript">
+                function PreviewImage() {
+                  var oFReader = new FileReader();
+                  oFReader.readAsDataURL(
+                    document.getElementById("file-selector").files[0]
+                  );
+                  oFReader.onload = function (oFREvent) {
+                    document.getElementById("preview").src =
+                      oFREvent.target.result;
+                  };
+                }
+              </script>
+              <br />
+            </div>
+          </div>
+
+
+          <hr />
+       
+              <div class="galary">
+              
+                  <% if (data) { %> 
+                    <% for (const item of data) { %>
+                  <div class="galary-item">
+                    <div class="galary-image"> 
+                        <img src="<%= item?.image?.url || "" %>" alt="<%=
+                      item?.image?.id || "" %>"  class="fix" />
+                     </div>
+                     <div>
+                         <div> <button class="btn btn-success copy" data-url="<%- item?.image?.url %>">Copy URL</button></div>
+                         <div> <strong> ID  </strong> <%- item?.image?.id  %> </div>
+                        
+                    </div>
+
+                    <div class="forms-container">
+                      <form action="<%- "/admin/images/delete/" + item.id+"?_method=DELETE" %>" 
+                        method="post" class="button-form">
+                        <button type="submit" class="btn btn-danger">
+                          Delete
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                  <% } %> 
+                <% } %>
+              </div>
+
+          <br />
+          <br />
+          <hr />
+        </div>
+      </div>
+      <!-- /. PAGE WRAPPER  -->
+    </div>
+    <script>
+        const copyButtons = document.querySelectorAll(".copy")
+        copyButtons.forEach(btn => 
+            btn.addEventListener("click", (e) => {
+                const url = e.target.dataset['url'];
+                navigator.clipboard.writeText(url);
+                alert("Link Copied To Clipboard")
+            })
+        )
+     </script>
+    <%- include("./includes/footer.ejs") %>
+  </body>
+</html>
