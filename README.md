@@ -2,15 +2,15 @@
 
 ### Main Features
 
-- Create blogs of different types and then the front-end displays them in a nice way.
+- Developed a Full-Stack Personal Blogging application using Express.js, React.js, and MongoDB.
+- Developed an Admin panel using EJS, CSS, and JavaScript to enable editing of hero sections, including image uploading and writing brief intros.
+- Integrated Cloudinary cloud storage to create a fast, reliable, and scalable image-uploading system.
+- Created an advanced blog editor with options to edit blog details and the main blog body using either. an advanced editor or Markdown, which is parsed and sanitized into HTML and saved in the database. 
+- Developed a REST API for seamless data retrieval from the database
+- Utilized React, React Router, JSX, and CSS to create an aesthetically pleasing front-end for the website
+- Leveraged Axios to interact with the backend API
 
-- Add your image and your links to the website.
-
-- Upload Images to The website. (Using Cloudinary)
-
-- Create and edit Blogs using markdown.
-
-### How to get Started with the application:
+### How to Get Started with the application:
 
 First Make sure you are inside the client directory and run the following command:
 
