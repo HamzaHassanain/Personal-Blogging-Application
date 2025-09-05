@@ -15,6 +15,7 @@ import start from "./app/start.mjs";
 import Debug from "./utils/Debug.mjs";
 import { ErrorResponse } from "./utils/ErrorResponse.mjs";
 import { corsOptions, sessionOptions } from "./app/options.mjs";
+
 dotenv.config();
 
 if (process.env.DEV === "TRUE") Debug.enabled = true;
