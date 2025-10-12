@@ -7,10 +7,9 @@
     "node": ">=18.x"
   },
   "scripts": {
-    "dev:start": "nodemon .",
+    "build": "echo \"Error: no build step specified\" && exit 1",
     "dev": "nodemon .",
-    "start": "node .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ."
   },
   "keywords": [],
   "author": "",

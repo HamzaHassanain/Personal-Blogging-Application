@@ -1,0 +1,15 @@
+{
+  "name": "personalbloggingapplication",
+  "keywords": [],
+  "scripts": {
+      "dev":   "turbo dev",
+    "build": "turbo build",
+    "start": "turbo start"
+  },
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.18.1",
+  "devDependencies": {
+    "turbo": "^2.5.8"
+  }
+}
