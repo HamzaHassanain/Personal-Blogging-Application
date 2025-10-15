@@ -1,0 +1,19 @@
+FROM node:20-alpine
+
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+WORKDIR /app
+
+# Copy workspace files
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json ./
+COPY Apps/Dashboard/package.json ./Apps/Dashboard/
+COPY Shared/ui/package.json ./Shared/ui/
+
+# Install dependencies
+RUN pnpm install --frozen-lockfile
+
+WORKDIR /app/Apps/Dashboard
+
+EXPOSE 5173
+
+CMD ["pnpm", "dev", "--host", "0.0.0.0"]

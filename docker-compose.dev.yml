@@ -1,0 +1,91 @@
+version: "3.8"
+
+services:
+  # MongoDB for development
+  mongodb-dev:
+    image: mongo:7.0
+    container_name: blog-mongodb-dev
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: blog_dev_db
+    volumes:
+      - mongodb_dev_data:/data/db
+    networks:
+      - blog-dev-network
+
+  # Development server with hot reload
+  server-dev:
+    build:
+      context: .
+      dockerfile: Apps/Server/Dockerfile.dev
+    container_name: blog-server-dev
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      NODE_ENV: development
+      PORT: 5000
+      MONGODB_URI: mongodb://admin:password123@mongodb-dev:27017/blog_dev_db?authSource=admin
+      JWT_SECRET: dev-jwt-secret
+    depends_on:
+      - mongodb-dev
+    volumes:
+      - ./Apps/Server:/app
+      - /app/node_modules
+    networks:
+      - blog-dev-network
+    command: pnpm dev
+
+  # Development client with hot reload
+  client-dev:
+    build:
+      context: .
+      dockerfile: Apps/Client/Dockerfile.dev
+    container_name: blog-client-dev
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: http://localhost:5000
+      CHOKIDAR_USEPOLLING: true
+    depends_on:
+      - server-dev
+    volumes:
+      - ./Apps/Client:/app/Apps/Client
+      - ./Shared:/app/Shared
+      - /app/Apps/Client/node_modules
+    networks:
+      - blog-dev-network
+    command: pnpm dev
+
+  # Development dashboard with hot reload
+  dashboard-dev:
+    build:
+      context: .
+      dockerfile: Apps/Dashboard/Dockerfile.dev
+    container_name: blog-dashboard-dev
+    restart: unless-stopped
+    ports:
+      - "4000:5173"
+    environment:
+      VITE_API_URL: http://localhost:5000
+    depends_on:
+      - server-dev
+    volumes:
+      - ./Apps/Dashboard:/app/Apps/Dashboard
+      - ./Shared:/app/Shared
+      - /app/Apps/Dashboard/node_modules
+    networks:
+      - blog-dev-network
+    command: pnpm dev
+
+volumes:
+  mongodb_dev_data:
+
+networks:
+  blog-dev-network:
+    driver: bridge
